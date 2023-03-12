@@ -1,0 +1,430 @@
+---
+title: "Final Project Predictive"
+output:
+  html_document: default
+  pdf_document: default
+date: "2022-11-28"
+---
+```{r eval=FALSE}
+library(tidyverse)
+library(dplyr)
+library(forecast)
+library(leaps)
+library(cfbfastR)
+library(tinytex)
+
+```
+
+
+collection of stats:
+Power 5 stats: 
+ACC
+```{r eval=FALSE}
+#Power 5 stats: 
+#ACC
+#2018
+acc18 <- cfbd_stats_season_team(year = 2018, conference = "ACC")
+
+acc18<-   acc18[order(acc18$team),]
+
+acc2018wins <- cfbd_game_records(year = 2018,conference = "ACC")
+
+acc2018winsandloses <-   acc2018wins[,c(2,7:8)]
+
+acc2018winsandloses <-   acc2018winsandloses[order(acc2018winsandloses$team),]
+
+acc2018winsandloses <- acc2018winsandloses[,c(2:3)]
+
+P5ACC2018 <- cbind(acc18, acc2018winsandloses)
+#2019
+acc19 <- cfbd_stats_season_team(year = 2019, conference = "ACC")
+
+acc19<-   acc19[order(acc19$team),]
+
+acc2019wins <- cfbd_game_records(year = 2019,conference = "ACC")
+
+acc2019winsandloses <-   acc2019wins[,c(2,7:8)]
+
+acc2019winsandloses <-   acc2019winsandloses[order(acc2019winsandloses$team),]
+
+acc2019winsandloses <- acc2019winsandloses[,c(2:3)]
+
+P5ACC2019 <- cbind(acc19, acc2019winsandloses)
+#2020
+acc20 <- cfbd_stats_season_team(year = 2020, conference = "ACC")
+
+acc20<-   acc20[order(acc20$team),]
+
+acc2020wins <- cfbd_game_records(year = 2020,conference = "ACC")
+
+acc2020winsandloses <-   acc2020wins[,c(2,7:8)]
+
+acc2020winsandloses <-   acc2020winsandloses[order(acc2020winsandloses$team),]
+
+acc2020winsandloses <- acc2020winsandloses[,c(2:3)]
+
+P5ACC2020 <- cbind(acc20, acc2020winsandloses)
+#2021
+acc21 <- cfbd_stats_season_team(year = 2021, conference = "ACC")
+
+acc21<-   acc21[order(acc21$team),]
+
+acc2021wins <- cfbd_game_records(year = 2021,conference = "ACC")
+
+acc2021winsandloses <-   acc2021wins[,c(2,7:8)]
+
+acc2021winsandloses <-   acc2021winsandloses[order(acc2021winsandloses$team),]
+
+acc2021winsandloses <- acc2021winsandloses[,c(2:3)]
+
+P5ACC2021 <- cbind(acc21, acc2021winsandloses)
+```
+
+B12
+```{r eval=FALSE}
+#B12
+#2018
+B1218 <- cfbd_stats_season_team(year = 2018, conference = "B12")
+B1218<-   B1218[order(B1218$team),]
+
+B122018wins <- cfbd_game_records(year = 2018,conference = "B12")
+
+B122018winsandloses <-   B122018wins[,c(2,7:8)]
+
+B122018winsandloses <-   B122018winsandloses[order(B122018winsandloses$team),]
+
+B122018winsandloses <- B122018winsandloses[,c(2:3)]
+
+P5B122018 <- cbind(B1218, B122018winsandloses)
+#2019
+B1219 <- cfbd_stats_season_team(year = 2019, conference = "B12")
+B1219<-   B1219[order(B1219$team),]
+
+B122019wins <- cfbd_game_records(year = 2019,conference = "B12")
+
+B122019winsandloses <-   B122019wins[,c(2,7:8)]
+
+B122019winsandloses <-   B122019winsandloses[order(B122019winsandloses$team),]
+
+B122019winsandloses <- B122019winsandloses[,c(2:3)]
+
+P5B122019 <- cbind(B1219, B122019winsandloses)
+#2020
+
+B1220 <- cfbd_stats_season_team(year = 2020, conference = "B12")
+B1220<-   B1220[order(B1220$team),]
+
+B122020wins <- cfbd_game_records(year = 2020,conference = "B12")
+
+B122020winsandloses <-   B122020wins[,c(2,7:8)]
+
+B122020winsandloses <-   B122020winsandloses[order(B122020winsandloses$team),]
+
+B122020winsandloses <- B122020winsandloses[,c(2:3)]
+
+P5B122020 <- cbind(B1220, B122020winsandloses)
+#2021
+
+B1221 <- cfbd_stats_season_team(year = 2021, conference = "B12")
+B1221<-   B1221[order(B1221$team),]
+
+B122021wins <- cfbd_game_records(year = 2021,conference = "B12")
+
+B122021winsandloses <-   B122021wins[,c(2,7:8)]
+
+B122021winsandloses <-   B122021winsandloses[order(B122021winsandloses$team),]
+
+B122021winsandloses <- B122021winsandloses[,c(2:3)]
+
+P5B122021 <- cbind(B1221, B122021winsandloses)
+```
+
+B1G
+```{r eval=FALSE}
+#B1G
+
+#2018
+B1G18 <- cfbd_stats_season_team(year = 2018, conference = "B1G")
+B1G18<-   B1G18[order(B1G18$team),]
+
+B1G2018wins <- cfbd_game_records(year = 2018,conference = "B1G")
+
+B1G2018winsandloses <-   B1G2018wins[,c(2,7:8)]
+
+B1G2018winsandloses <-   B1G2018winsandloses[order(B1G2018winsandloses$team),]
+
+B1G2018winsandloses <- B1G2018winsandloses[,c(2:3)]
+
+P5B1G2018 <- cbind(B1G18, B1G2018winsandloses)
+#2019
+B1G19 <- cfbd_stats_season_team(year = 2019, conference = "B1G")
+B1G19<-   B1G19[order(B1G19$team),]
+
+B1G2019wins <- cfbd_game_records(year = 2019,conference = "B1G")
+
+B1G2019winsandloses <-   B1G2019wins[,c(2,7:8)]
+
+B1G2019winsandloses <-   B1G2019winsandloses[order(B1G2019winsandloses$team),]
+
+B1G2019winsandloses <- B1G2019winsandloses[,c(2:3)]
+
+P5B1G2019 <- cbind(B1G19, B1G2019winsandloses)
+#2020
+
+B1G20 <- cfbd_stats_season_team(year = 2020, conference = "B1G")
+B1G20<-   B1G20[order(B1G20$team),]
+
+B1G2020wins <- cfbd_game_records(year = 2020,conference = "B1G")
+
+B1G2020winsandloses <-   B1G2020wins[,c(2,7:8)]
+
+B1G2020winsandloses <-   B1G2020winsandloses[order(B1G2020winsandloses$team),]
+
+B1G2020winsandloses <- B1G2020winsandloses[,c(2:3)]
+
+P5B1G2020 <- cbind(B1G20, B1G2020winsandloses)
+#2021
+
+B1G21 <- cfbd_stats_season_team(year = 2021, conference = "B1G")
+B1G21<-   B1G21[order(B1G21$team),]
+
+B1G2021wins <- cfbd_game_records(year = 2021,conference = "B1G")
+
+B1G2021winsandloses <-   B1G2021wins[,c(2,7:8)]
+
+B1G2021winsandloses <-   B1G2021winsandloses[order(B1G2021winsandloses$team),]
+
+B1G2021winsandloses <- B1G2021winsandloses[,c(2:3)]
+
+P5B1G2021 <- cbind(B1G21, B1G2021winsandloses)
+
+```
+SEC
+```{r eval=FALSE}
+#SEC
+
+#2018
+SEC18 <- cfbd_stats_season_team(year = 2018, conference = "SEC")
+SEC18<-   SEC18[order(SEC18$team),]
+
+SEC2018wins <- cfbd_game_records(year = 2018,conference = "SEC")
+
+SEC2018winsandloses <-   SEC2018wins[,c(2,7:8)]
+
+SEC2018winsandloses <-   SEC2018winsandloses[order(SEC2018winsandloses$team),]
+
+SEC2018winsandloses <- SEC2018winsandloses[,c(2:3)]
+
+P5SEC2018 <- cbind(SEC18, SEC2018winsandloses)
+#2019
+SEC19 <- cfbd_stats_season_team(year = 2019, conference = "SEC")
+SEC19<-   SEC19[order(SEC19$team),]
+
+SEC2019wins <- cfbd_game_records(year = 2019,conference = "SEC")
+
+SEC2019winsandloses <-   SEC2019wins[,c(2,7:8)]
+
+SEC2019winsandloses <-   SEC2019winsandloses[order(SEC2019winsandloses$team),]
+
+SEC2019winsandloses <- SEC2019winsandloses[,c(2:3)]
+
+P5SEC2019 <- cbind(SEC19, SEC2019winsandloses)
+#2020
+SEC20 <- cfbd_stats_season_team(year = 2020, conference = "SEC")
+SEC20<-   SEC20[order(SEC20$team),]
+
+SEC2020wins <- cfbd_game_records(year = 2020,conference = "SEC")
+
+SEC2020winsandloses <-   SEC2020wins[,c(2,7:8)]
+
+SEC2020winsandloses <-   SEC2020winsandloses[order(SEC2020winsandloses$team),]
+
+SEC2020winsandloses <- SEC2020winsandloses[,c(2:3)]
+
+P5SEC2020 <- cbind(SEC20, SEC2020winsandloses)
+#2021
+SEC21 <- cfbd_stats_season_team(year = 2021, conference = "SEC")
+
+SEC21<-   SEC21[order(SEC21$team),]
+
+SEC2021wins <- cfbd_game_records(year = 2021,conference = "SEC")
+
+SEC2021winsandloses <-   SEC2021wins[,c(2,7:8)]
+
+SEC2021winsandloses <-   SEC2021winsandloses[order(SEC2021winsandloses$team),]
+
+SEC2021winsandloses <- SEC2021winsandloses[,c(2:3)]
+
+P5SEC2021 <- cbind(SEC21, SEC2021winsandloses)
+
+```
+
+PAC
+```{r eval=FALSE}
+#PAC
+#2018
+PAC18 <- cfbd_stats_season_team(year = 2018, conference = "PAC")
+
+PAC18<-   PAC18[order(PAC18$team),]
+
+PAC2018wins <- cfbd_game_records(year = 2018,conference = "PAC")
+
+PAC2018winsandloses <-   PAC2018wins[,c(2,7:8)]
+
+PAC2018winsandloses <-   PAC2018winsandloses[order(PAC2018winsandloses$team),]
+
+PAC2018winsandloses <- PAC2018winsandloses[,c(2:3)]
+
+P5PAC2018 <- cbind(PAC18, PAC2018winsandloses)
+
+#2019
+PAC19 <- cfbd_stats_season_team(year = 2019, conference = "PAC")
+PAC19<-   PAC19[order(PAC19$team),]
+
+PAC2019wins <- cfbd_game_records(year = 2019,conference = "PAC")
+
+PAC2019winsandloses <-   PAC2019wins[,c(2,7:8)]
+
+PAC2019winsandloses <-   PAC2019winsandloses[order(PAC2019winsandloses$team),]
+
+PAC2019winsandloses <- PAC2019winsandloses[,c(2:3)]
+
+P5PAC2019 <- cbind(PAC19, PAC2019winsandloses)
+#2020
+PAC20 <- cfbd_stats_season_team(year = 2020, conference = "PAC")
+PAC20<-   PAC20[order(PAC20$team),]
+
+PAC2020wins <- cfbd_game_records(year = 2020,conference = "PAC")
+
+PAC2020winsandloses <-   PAC2020wins[,c(2,7:8)]
+
+PAC2020winsandloses <-   PAC2020winsandloses[order(PAC2020winsandloses$team),]
+
+PAC2020winsandloses <- PAC2020winsandloses[,c(2:3)]
+
+P5PAC2020 <- cbind(PAC20, PAC2020winsandloses)
+#2021
+PAC21 <- cfbd_stats_season_team(year = 2021, conference = "PAC")
+PAC21<-   PAC21[order(PAC21$team),]
+
+PAC2021wins <- cfbd_game_records(year = 2021,conference = "PAC")
+
+PAC2021winsandloses <-   PAC2021wins[,c(2,7:8)]
+
+PAC2021winsandloses <-   PAC2021winsandloses[order(PAC2021winsandloses$team),]
+
+PAC2021winsandloses <- PAC2021winsandloses[,c(2:3)]
+
+P5PAC2021 <- cbind(PAC21, PAC2021winsandloses)
+```
+
+Power 5 yearly data:
+```{r eval=FALSE}
+#2018
+P52018 <- rbind(P5ACC2018,P5B122018,P5B1G2018,P5PAC2018,P5SEC2018)
+
+#2019
+P52019 <- rbind(P5ACC2019,P5B122019,P5B1G2019,P5PAC2019,P5SEC2019)
+
+#2020
+P52020 <- rbind(P5ACC2020,P5B122020,P5B1G2020,P5PAC2020,P5SEC2020)
+
+#2021
+P52021 <- rbind(P5ACC2021,P5B122021,P5B1G2021,P5PAC2021,P5SEC2021)
+
+```
+
+Partitioning Data:
+Partition Data for year 2018
+Remove Categorical data(YEAR, TEAM, CONFRENCE, GAMES):
+```{r eval=FALSE}
+#2018 data cleanup
+x2018 <- P52018[,-c(1:4)]
+#Partition Data for year 2019
+x2019 <- P52019[,-c(1:4)]
+#Partition Data for year 2020
+x2020 <- P52020[,-c(1:4)]
+#Partition Data for year 2021
+x2021 <- P52021[,-c(1:4)]
+
+```
+Combine the data
+```{r eval=FALSE}
+#combine all the years
+allcfpdata <- rbind(x2018,x2019,x2020,x2021)
+allcfpdata <- allcfpdata[,-c(30)]
+```
+Training all the data:
+```{r eval=FALSE}
+RNGkind(sample.kind = "Rounding")
+set.seed(1)
+train.index <- sample(c(1:dim(allcfpdata)[1]), dim(allcfpdata)[1]*0.6)  
+train.df <- allcfpdata[train.index, ]
+valid.df <- allcfpdata[-train.index, ]
+head(train.df)
+head(valid.df)
+```
+Model with all the predictors for all the data:
+```{r eval=FALSE}
+lm <- lm(total_wins ~ ., data = train.df)
+options(scipen = 999)
+summary(lm)
+```
+Exhaustive Search:
+```{r eval=FALSE}
+search <- regsubsets(total_wins ~ ., data = train.df, nvmax = dim(train.df)[2],method = "exhaustive")
+sum <- summary(search)
+sum$adjr2
+#11 predictors
+```
+Backward Selection:
+```{r eval=FALSE}
+lm.step <- step(lm, direction = "backward")
+summary(lm.step)
+lm.step.pred <- predict(lm.step, valid.df, na.action = na.pass)
+accuracy(lm.step.pred,valid.df$total_wins)
+```
+Forward Selection:
+```{r eval=FALSE}
+#All
+# create model with no predictors
+lm.null <- lm(total_wins~1, data = train.df)
+
+# use step() to run forward regression.
+lm.step <- step(lm.null, scope=list(lower=lm.null, upper=lm), direction = "forward")
+
+summary(lm.step)
+
+lm.step.pred <- predict(lm.step, valid.df, na.action = na.pass)
+accuracy(lm.step.pred,valid.df$total_wins)
+```
+Step Wise:
+```{r eval=FALSE}
+#ALL
+lm <- lm(total_wins ~ ., data = train.df, na.action = na.exclude) #full model
+lm.step <- step(lm, direction = "both")
+
+summary(lm.step)
+
+lm.step.pred <- predict(lm.step, valid.df, na.action = na.pass)
+accuracy(lm.step.pred,valid.df$total_wins)
+```
+PCA
+```{r eval=FALSE}
+PC <- prcomp(allcfpdata, scale = T)
+
+PC$rotation <- -1*PC$rotation
+
+PC$rotation
+```
+
+```{r eval=FALSE}
+summary(prcomp(allcfpdata, scale = T))
+```
+
+
+```{r eval=FALSE}
+dim(allcfpdata)
+```
+
+
